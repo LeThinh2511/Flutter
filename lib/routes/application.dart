@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Application extends StatefulWidget {
-  String title;
-  String? email;
-  String? password;
+  const Application({Key? key, required this.title}): super(key: key);
 
-  Application({required this.title, this.email, this.password});
+  final String title;
 
   @override
   State<StatefulWidget> createState() {
@@ -14,7 +13,8 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  String _email = "";
+  String _email = '';
+  String _batteryLevel = 'Unknown battery level.';
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class _ApplicationState extends State<Application> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Enter your email",
+              children: <Widget> [
+                const Text(
+                  'Enter your email',
                   style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 16,
@@ -44,12 +44,12 @@ class _ApplicationState extends State<Application> {
                   textDirection: TextDirection.ltr,
                 ),
                 TextField(
-                  onChanged: (text) {
-                    this.setState(() {
+                  onChanged: (String text) {
+                    setState(() {
                       _email = text;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(6)
@@ -58,8 +58,22 @@ class _ApplicationState extends State<Application> {
                   ),
                 ),
                 Text(
-                  "Email: $_email",
-                  style: TextStyle(
+                  'Email: $_email',
+                  style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 16,
+                      fontStyle: FontStyle.normal
+                  ),
+                  textDirection: TextDirection.ltr,
+                ),
+                TextButton(onPressed: () {
+                  _getBatteryLevel();
+                }, child:
+                    const Text('Get battery level')
+                ),
+                Text(
+                  'Battery: $_batteryLevel',
+                  style: const TextStyle(
                       color: Colors.red,
                       fontSize: 16,
                       fontStyle: FontStyle.normal
@@ -72,5 +86,19 @@ class _ApplicationState extends State<Application> {
         ),
       ),
     );
+  }
+
+  Future<void> _getBatteryLevel() async {
+    String result = '';
+    const MethodChannel channel = MethodChannel('com.thinhle.method-channel');
+    try {
+      final int batteryLevel = await channel.invokeMethod<int>('getBatteryLevel') ?? 0;
+      result = 'Battery level at $batteryLevel% .';
+    } catch (err) {
+      result = "Failed to get battery level: '${err.toString()}'.";
+    }
+    setState(() {
+      _batteryLevel = result;
+    });
   }
 }

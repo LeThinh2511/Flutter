@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Application.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_demo/routes/application.dart';
 
 void main() {
-  runApp(Application(title: "Flutter Demo", email: "thinhle@gmail.com", password: "doanxem",));
+  runApp(const Application(title: 'Flutter Demo'));
 }
 
