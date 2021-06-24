@@ -21,7 +21,35 @@ class _ApplicationState extends State<Application> {
     return MaterialApp(
       title: widget.title,
       home: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: const <Widget> [
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+              ),
+              ListTile(
+                leading: Icon(Icons.people),
+                title: Text('Profile'),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
+          automaticallyImplyLeading: true,
+          actions: <Widget> [
+            IconButton(
+                onPressed: () {
+                },
+                icon: const Icon(Icons.info)
+            ),
+            IconButton(
+                onPressed: () {
+
+                },
+                icon: const Icon(Icons.search)
+            )
+          ],
           title: Text(
             widget.title,
             textDirection: TextDirection.ltr,
