@@ -55,64 +55,74 @@ class _ApplicationState extends State<Application> {
             textDirection: TextDirection.ltr,
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget> [
-                const Text(
-                  'Enter your email',
-                  style: TextStyle(
+        body: Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget> [
+              const Text(
+                'Enter your email',
+                style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 16,
                     fontStyle: FontStyle.normal
-                  ),
-                  textDirection: TextDirection.ltr,
                 ),
-                TextField(
-                  onChanged: (String text) {
-                    setState(() {
-                      _email = text;
-                    });
-                  },
-                  decoration: const InputDecoration(
+                textDirection: TextDirection.ltr,
+              ),
+              TextField(
+                onChanged: (String text) {
+                  setState(() {
+                    _email = text;
+                  });
+                },
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(6)
-                      )
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(6)
+                        )
                     )
-                  ),
                 ),
-                Text(
-                  'Email: $_email',
-                  style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 16,
-                      fontStyle: FontStyle.normal
-                  ),
-                  textDirection: TextDirection.ltr,
+              ),
+              Text(
+                'Email: $_email',
+                style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal
                 ),
-                TextButton(onPressed: () {
-                  _getBatteryLevel();
-                }, child:
-                    const Text('Get battery level')
+                textDirection: TextDirection.ltr,
+              ),
+              TextButton(
+                  onPressed: () {
+                    _getBatteryLevel();
+                    },
+                  child: const Text('Get battery level'),
+              ),
+              Text(
+                'Battery: $_batteryLevel',
+                style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal
                 ),
-                Text(
-                  'Battery: $_batteryLevel',
-                  style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 16,
-                      fontStyle: FontStyle.normal
-                  ),
-                  textDirection: TextDirection.ltr,
+                textDirection: TextDirection.ltr,
+              ),
+              Expanded(
+                child: ListView(
+                  children: const <Widget> [
+                    Text('hello'),
+                    SizedBox(
+                      height: 900,
+                    ),
+                    Text('hello')
+                  ],
                 ),
-              ],
-            ),
-          )
+              )
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 
