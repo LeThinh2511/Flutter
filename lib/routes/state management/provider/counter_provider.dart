@@ -7,7 +7,7 @@ class CounterProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CounterModel model = Provider.of<CounterModel>(context);
+    print('reload');
 
     return MaterialApp(
       home: Scaffold(
@@ -24,7 +24,7 @@ class CounterProvider extends StatelessWidget {
               children: <Widget> [
                 TextButton(
                     onPressed: () {
-                      model.increment();
+                      context.read<CounterModel>().increment();
                     },
                     child: const Text(
                       '+1',
@@ -34,16 +34,20 @@ class CounterProvider extends StatelessWidget {
                       ),
                     )
                 ),
-                Text(
-                  '${model.currentCount}',
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 26
-                  ),
-                ),
+                Selector<CounterModel, int>(builder: (BuildContext context, int count, _) {
+                  return Text(
+                    '$count',
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 26
+                    ),
+                  );
+                }, selector: (BuildContext context, CounterModel model) {
+                  return model.currentCount;
+                }),
                 TextButton(
                     onPressed: () {
-                      model.decrement();
+                      context.read<CounterModel>().decrement();
                     },
                     child: const Text(
                       '-1',
